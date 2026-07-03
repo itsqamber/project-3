@@ -75,6 +75,7 @@ function setupReveal() {
 }
 
 function populateGenres() {
+  if (!genreFilter) return;
   genreFilter.innerHTML = genres.map((genre) => `<option value="${genre}">${genre}</option>`).join("");
 }
 
@@ -98,6 +99,7 @@ function getFilteredGames() {
 }
 
 function renderGames() {
+  if (!gamesGrid || !catalogCount || !catalogHint || !loadMoreGames) return;
   const results = getFilteredGames();
   const visibleGames = results.slice(0, state.visible);
 
@@ -130,41 +132,56 @@ function updateAndRender() {
 function bindEvents() {
   window.addEventListener("scroll", setHeader, { passive: true });
 
-  menuBtn.addEventListener("click", () => {
-    navLinks.classList.toggle("open");
-    menuBtn.setAttribute("aria-label", navLinks.classList.contains("open") ? "Close menu" : "Open menu");
-  });
+  if (menuBtn && navLinks) {
+    menuBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("open");
+      menuBtn.setAttribute("aria-label", navLinks.classList.contains("open") ? "Close menu" : "Open menu");
+    });
 
-  navLinks.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => navLinks.classList.remove("open"));
-  });
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => navLinks.classList.remove("open"));
+    });
+  }
 
   document.querySelectorAll("[data-focus-search]").forEach((button) => {
     button.addEventListener("click", () => {
-      document.querySelector("#games").scrollIntoView({ behavior: "smooth" });
+      const gamesSection = document.querySelector("#games");
+      if (!gamesSection || !gameSearch) {
+        window.location.href = "games.html";
+        return;
+      }
+      gamesSection.scrollIntoView({ behavior: "smooth" });
       setTimeout(() => gameSearch.focus(), 450);
     });
   });
 
-  gameSearch.addEventListener("input", (event) => {
-    state.query = event.target.value;
-    updateAndRender();
-  });
+  if (gameSearch) {
+    gameSearch.addEventListener("input", (event) => {
+      state.query = event.target.value;
+      updateAndRender();
+    });
+  }
 
-  genreFilter.addEventListener("change", (event) => {
-    state.genre = event.target.value;
-    updateAndRender();
-  });
+  if (genreFilter) {
+    genreFilter.addEventListener("change", (event) => {
+      state.genre = event.target.value;
+      updateAndRender();
+    });
+  }
 
-  sortGames.addEventListener("change", (event) => {
-    state.sort = event.target.value;
-    updateAndRender();
-  });
+  if (sortGames) {
+    sortGames.addEventListener("change", (event) => {
+      state.sort = event.target.value;
+      updateAndRender();
+    });
+  }
 
-  loadMoreGames.addEventListener("click", () => {
-    state.visible += 24;
-    renderGames();
-  });
+  if (loadMoreGames) {
+    loadMoreGames.addEventListener("click", () => {
+      state.visible += 24;
+      renderGames();
+    });
+  }
 }
 
 populateGenres();

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Games Library | Nexus Arena</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav shell" aria-label="Primary navigation">
+      <a class="brand" href="index.html"><span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M6 12h12M12 6v12"/><path d="M5 8l4-3h6l4 3 2 8-3 3-4-4h-4l-4 4-3-3 2-8Z"/></svg></span><span>Nexus Arena</span></a>
+      <div class="nav-links" id="navLinks"><a href="index.html">Home</a><a href="games.html">Games/Library</a><a href="news.html">News</a><a href="store.html">Store</a><a href="esports.html">Esports</a><a href="profile.html">Profile</a><a href="community.html">Community</a><a href="leaderboard.html">Leaderboard</a><a href="support.html">Support</a></div>
+      <div class="nav-actions"><button class="icon-btn" type="button" data-focus-search aria-label="Search games"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button><a class="btn btn-primary" href="profile.html">Sign In</a><button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+    </nav>
+  </header>
+  <main>
+    <section class="page-hero" style="--page-image:url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1800&q=82')">
+      <div class="shell reveal"><div class="eyebrow"><span class="pulse"></span> 1,000 playable titles</div><h1>Games Library</h1><p>Browse a massive modern catalog with instant search, genre filters, ratings, player counts, and smooth load-more browsing.</p></div>
+    </section>
+    <section id="games">
+      <div class="shell">
+        <div class="game-toolbar reveal">
+          <label class="search-box" for="gameSearch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="gameSearch" type="search" placeholder="Search 1,000 games..." autocomplete="off" /></label>
+          <select id="genreFilter" aria-label="Filter by genre"></select>
+          <select id="sortGames" aria-label="Sort games"><option value="featured">Featured</option><option value="rating">Highest rated</option><option value="players">Most players</option><option value="newest">Newest</option><option value="name">Name A-Z</option></select>
+        </div>
+        <div class="catalog-meta reveal"><strong id="catalogCount">Loading games...</strong><span id="catalogHint">Showing optimized results</span></div>
+        <div class="games-grid" id="gamesGrid" aria-live="polite"></div>
+        <div class="load-row"><button class="btn btn-primary" id="loadMoreGames" type="button">Load More Games</button></div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="shell footer-row"><div class="brand"><span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M6 12h12M12 6v12"/><path d="M5 8l4-3h6l4 3 2 8-3 3-4-4h-4l-4 4-3-3 2-8Z"/></svg></span><span>Nexus Arena</span></div><div class="footer-links"><a href="about.html">About</a><a href="support.html#privacy">Privacy Policy</a><a href="support.html#terms">Terms of Service</a><a href="support.html#contact">Contact</a></div></div></footer>
+  <script src="script.js"></script>
+</body>
+</html>
