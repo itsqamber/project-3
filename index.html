@@ -3,1006 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nexus Arena | Competitive Gaming Hub</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg: #07090f;
-      --panel: rgba(18, 23, 36, 0.82);
-      --panel-strong: rgba(24, 31, 48, 0.96);
-      --line: rgba(255, 255, 255, 0.12);
-      --text: #f7f9ff;
-      --muted: #aeb8cf;
-      --cyan: #30e7ff;
-      --lime: #b6ff52;
-      --coral: #ff5f7f;
-      --gold: #ffd166;
-      --shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
-      --radius: 8px;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 18% 18%, rgba(48, 231, 255, 0.14), transparent 28rem),
-        radial-gradient(circle at 80% 8%, rgba(255, 95, 127, 0.12), transparent 30rem),
-        linear-gradient(145deg, #06070c 0%, #0b111b 48%, #08090e 100%);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    .shell {
-      width: min(1180px, calc(100% - 32px));
-      margin: 0 auto;
-    }
-
-    .site-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 20;
-      border-bottom: 1px solid transparent;
-      transition: background 0.2s ease, border-color 0.2s ease, backdrop-filter 0.2s ease;
-    }
-
-    .site-header.scrolled {
-      background: rgba(7, 9, 15, 0.84);
-      border-color: var(--line);
-      backdrop-filter: blur(18px);
-    }
-
-    .nav {
-      height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 22px;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 900;
-      letter-spacing: 0;
-    }
-
-    .brand-mark {
-      width: 40px;
-      height: 40px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(48, 231, 255, 0.58);
-      border-radius: var(--radius);
-      background: linear-gradient(135deg, rgba(48, 231, 255, 0.22), rgba(182, 255, 82, 0.16));
-      box-shadow: 0 0 34px rgba(48, 231, 255, 0.22);
-    }
-
-    .brand-mark svg {
-      width: 24px;
-      height: 24px;
-      stroke: var(--cyan);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      color: var(--muted);
-      font-size: 0.94rem;
-      font-weight: 700;
-    }
-
-    .nav-links a {
-      position: relative;
-      padding: 8px 0;
-    }
-
-    .nav-links a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 2px;
-      height: 2px;
-      transform: scaleX(0);
-      transform-origin: left;
-      background: var(--cyan);
-      transition: transform 0.2s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--text);
-    }
-
-    .nav-links a:hover::after {
-      transform: scaleX(1);
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .icon-btn,
-    .menu-btn {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text);
-      cursor: pointer;
-      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
-    }
-
-    .icon-btn:hover,
-    .menu-btn:hover {
-      transform: translateY(-2px);
-      border-color: rgba(48, 231, 255, 0.55);
-      background: rgba(48, 231, 255, 0.11);
-    }
-
-    .menu-btn {
-      display: none;
-    }
-
-    .btn {
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      padding: 0 17px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text);
-      font-weight: 900;
-      cursor: pointer;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      border-color: rgba(48, 231, 255, 0.5);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
-    }
-
-    .btn-primary {
-      border-color: transparent;
-      background: linear-gradient(135deg, var(--cyan), var(--lime));
-      color: #041016;
-      box-shadow: 0 18px 42px rgba(48, 231, 255, 0.22);
-    }
-
-    .btn-coral {
-      border-color: transparent;
-      background: linear-gradient(135deg, var(--coral), var(--gold));
-      color: #17080c;
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      align-items: end;
-      position: relative;
-      isolation: isolate;
-      padding: 118px 0 54px;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: -3;
-      background:
-        linear-gradient(90deg, rgba(7, 9, 15, 0.96), rgba(7, 9, 15, 0.7) 42%, rgba(7, 9, 15, 0.3)),
-        url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1800&q=82") center / cover;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: auto 0 0;
-      height: 34%;
-      z-index: -2;
-      background: linear-gradient(transparent, var(--bg));
-    }
-
-    .grid-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-      background-size: 56px 56px;
-      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), transparent 84%);
-    }
-
-    .hero-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(330px, 0.64fr);
-      gap: 34px;
-      align-items: end;
-    }
-
-    .eyebrow {
-      width: fit-content;
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 9px 12px;
-      border: 1px solid rgba(48, 231, 255, 0.32);
-      border-radius: 999px;
-      background: rgba(48, 231, 255, 0.1);
-      color: #d9fbff;
-      font-size: 0.8rem;
-      font-weight: 900;
-      text-transform: uppercase;
-    }
-
-    .hero-logo {
-      width: 88px;
-      height: 88px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 18px;
-      border: 1px solid rgba(48, 231, 255, 0.52);
-      border-radius: 20px;
-      background:
-        linear-gradient(135deg, rgba(48, 231, 255, 0.22), rgba(255, 95, 127, 0.18)),
-        rgba(7, 9, 15, 0.72);
-      box-shadow: 0 0 48px rgba(48, 231, 255, 0.24);
-      backdrop-filter: blur(14px);
-    }
-
-    .hero-logo svg {
-      width: 54px;
-      height: 54px;
-      color: var(--cyan);
-    }
-
-    .pulse {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--lime);
-      box-shadow: 0 0 0 0 rgba(182, 255, 82, 0.55);
-      animation: pulse 1.8s infinite;
-    }
-
-    @keyframes pulse {
-      70% {
-        box-shadow: 0 0 0 12px rgba(182, 255, 82, 0);
-      }
-      100% {
-        box-shadow: 0 0 0 0 rgba(182, 255, 82, 0);
-      }
-    }
-
-    h1 {
-      max-width: 780px;
-      margin: 22px 0 18px;
-      font-size: clamp(3.2rem, 7vw, 6.9rem);
-      line-height: 0.92;
-      letter-spacing: 0;
-    }
-
-    .hero-copy {
-      max-width: 640px;
-      margin: 0 0 28px;
-      color: var(--muted);
-      font-size: clamp(1rem, 1.8vw, 1.2rem);
-      line-height: 1.7;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .hero-panel {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(18, 23, 36, 0.84), rgba(11, 15, 25, 0.92));
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      backdrop-filter: blur(16px);
-    }
-
-    .match-image {
-      position: relative;
-      aspect-ratio: 16 / 10;
-      overflow: hidden;
-    }
-
-    .match-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: saturate(1.08) contrast(1.06);
-    }
-
-    .match-badge {
-      position: absolute;
-      left: 16px;
-      top: 16px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: rgba(7, 9, 15, 0.78);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      font-size: 0.78rem;
-      font-weight: 900;
-    }
-
-    .match-content {
-      padding: 18px;
-    }
-
-    .teams {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 16px;
-    }
-
-    .team {
-      display: grid;
-      gap: 8px;
-      justify-items: center;
-      text-align: center;
-      min-width: 0;
-    }
-
-    .team-logo {
-      width: 54px;
-      height: 54px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.06);
-      font-weight: 1000;
-      color: var(--cyan);
-    }
-
-    .team strong {
-      max-width: 100%;
-      overflow-wrap: anywhere;
-      font-size: 0.92rem;
-    }
-
-    .versus {
-      color: var(--gold);
-      font-weight: 1000;
-    }
-
-    .match-meta {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding-top: 14px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .stat-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      margin-top: 44px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: var(--line);
-    }
-
-    .stat {
-      padding: 20px;
-      background: rgba(12, 16, 26, 0.82);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: clamp(1.6rem, 3vw, 2.4rem);
-      color: var(--text);
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-weight: 700;
-    }
-
-    section {
-      padding: 86px 0;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 28px;
-      margin-bottom: 26px;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      max-width: 680px;
-      font-size: clamp(2rem, 4vw, 3.4rem);
-      line-height: 1;
-      letter-spacing: 0;
-    }
-
-    .section-head p {
-      max-width: 420px;
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .game-card {
-      position: relative;
-      min-height: 360px;
-      display: flex;
-      align-items: end;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: #111827;
-      box-shadow: 0 22px 52px rgba(0, 0, 0, 0.28);
-    }
-
-    .game-card img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.45s ease;
-    }
-
-    .game-card:hover img {
-      transform: scale(1.06);
-    }
-
-    .game-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(transparent 24%, rgba(7, 9, 15, 0.92));
-    }
-
-    .game-info {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      padding: 22px;
-    }
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 13px;
-    }
-
-    .tag {
-      padding: 6px 9px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 999px;
-      background: rgba(7, 9, 15, 0.56);
-      color: #e9eefc;
-      font-size: 0.75rem;
-      font-weight: 900;
-    }
-
-    .game-info h3 {
-      margin: 0 0 8px;
-      font-size: 1.55rem;
-    }
-
-    .game-info p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-
-    .feature-card,
-    .tier,
-    .event-card {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--panel);
-      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
-      backdrop-filter: blur(14px);
-    }
-
-    .feature-card {
-      padding: 22px;
-    }
-
-    .feature-icon {
-      width: 46px;
-      height: 46px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 18px;
-      border-radius: var(--radius);
-      background: rgba(48, 231, 255, 0.11);
-      border: 1px solid rgba(48, 231, 255, 0.24);
-      color: var(--cyan);
-    }
-
-    .feature-card h3,
-    .tier h3,
-    .event-card h3 {
-      margin: 0 0 10px;
-      font-size: 1.15rem;
-    }
-
-    .feature-card p,
-    .tier p,
-    .event-card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.58;
-    }
-
-    .events-layout {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 18px;
-      align-items: stretch;
-    }
-
-    .event-poster {
-      min-height: 460px;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: #121827;
-    }
-
-    .event-poster img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .event-poster::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(transparent 20%, rgba(7, 9, 15, 0.9));
-    }
-
-    .poster-copy {
-      position: absolute;
-      left: 24px;
-      right: 24px;
-      bottom: 24px;
-      z-index: 1;
-    }
-
-    .poster-copy h3 {
-      margin: 0 0 8px;
-      font-size: clamp(1.7rem, 3vw, 2.6rem);
-    }
-
-    .poster-copy p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .event-list {
-      display: grid;
-      gap: 14px;
-    }
-
-    .event-card {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 18px;
-      align-items: center;
-      padding: 18px;
-    }
-
-    .date-box {
-      width: 70px;
-      height: 70px;
-      display: grid;
-      place-items: center;
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--line);
-      text-align: center;
-      font-weight: 1000;
-    }
-
-    .date-box span {
-      display: block;
-      color: var(--cyan);
-      font-size: 0.78rem;
-      text-transform: uppercase;
-    }
-
-    .date-box strong {
-      display: block;
-      font-size: 1.8rem;
-      line-height: 1;
-    }
-
-    .event-prize {
-      color: var(--lime);
-      font-weight: 1000;
-      white-space: nowrap;
-    }
-
-    .tiers {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .news-grid,
-    .testimonial-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .news-card,
-    .testimonial-card {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--panel);
-      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
-      overflow: hidden;
-      backdrop-filter: blur(14px);
-    }
-
-    .news-card img {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-    }
-
-    .news-body,
-    .testimonial-card {
-      padding: 22px;
-    }
-
-    .news-date {
-      display: inline-flex;
-      margin-bottom: 12px;
-      color: var(--lime);
-      font-size: 0.78rem;
-      font-weight: 1000;
-      text-transform: uppercase;
-    }
-
-    .news-card h3,
-    .testimonial-card h3 {
-      margin: 0 0 10px;
-      font-size: 1.2rem;
-    }
-
-    .news-card p,
-    .testimonial-card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .stars {
-      color: var(--gold);
-      font-size: 1.05rem;
-      margin-bottom: 16px;
-    }
-
-    .player {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .avatar {
-      width: 46px;
-      height: 46px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--cyan), var(--coral));
-      color: #071018;
-      font-weight: 1000;
-    }
-
-    .player strong,
-    .player span {
-      display: block;
-    }
-
-    .player span {
-      color: var(--muted);
-      font-size: 0.88rem;
-      margin-top: 2px;
-    }
-
-    .tier {
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .tier.featured {
-      border-color: rgba(48, 231, 255, 0.45);
-      background: linear-gradient(180deg, rgba(23, 45, 58, 0.9), rgba(14, 19, 30, 0.94));
-    }
-
-    .price {
-      display: flex;
-      align-items: end;
-      gap: 6px;
-      margin: 18px 0;
-    }
-
-    .price strong {
-      font-size: 2.8rem;
-      line-height: 1;
-    }
-
-    .price span {
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .tier ul {
-      list-style: none;
-      display: grid;
-      gap: 12px;
-      padding: 0;
-      margin: 22px 0;
-      color: #dce5f7;
-    }
-
-    .tier li {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-    }
-
-    .tier li::before {
-      content: "";
-      width: 9px;
-      height: 9px;
-      flex: 0 0 auto;
-      margin-top: 7px;
-      border-radius: 50%;
-      background: var(--lime);
-      box-shadow: 0 0 14px rgba(182, 255, 82, 0.45);
-    }
-
-    .cta {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(48, 231, 255, 0.24);
-      border-radius: var(--radius);
-      background:
-        linear-gradient(90deg, rgba(7, 9, 15, 0.96), rgba(7, 9, 15, 0.74)),
-        url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1600&q=82") center / cover;
-      padding: 46px;
-      box-shadow: var(--shadow);
-    }
-
-    .cta h2 {
-      max-width: 720px;
-      margin: 0 0 14px;
-      font-size: clamp(2rem, 4vw, 3.7rem);
-      line-height: 1;
-    }
-
-    .cta p {
-      max-width: 610px;
-      margin: 0 0 24px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .site-footer {
-      padding: 34px 0;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-    }
-
-    .footer-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .socials {
-      display: flex;
-      gap: 10px;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      font-weight: 800;
-    }
-
-    .footer-links a:hover {
-      color: var(--text);
-    }
-
-    svg {
-      width: 20px;
-      height: 20px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 960px) {
-      .nav-links {
-        position: fixed;
-        top: 76px;
-        left: 16px;
-        right: 16px;
-        display: none;
-        flex-direction: column;
-        align-items: stretch;
-        padding: 18px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: rgba(7, 9, 15, 0.96);
-        backdrop-filter: blur(18px);
-      }
-
-      .nav-links.open {
-        display: flex;
-      }
-
-      .menu-btn {
-        display: grid;
-      }
-
-      .nav-actions .btn {
-        display: none;
-      }
-
-      .hero-layout,
-      .events-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-panel {
-        max-width: 520px;
-      }
-
-      .stat-strip,
-      .features,
-      .games-grid,
-      .tiers,
-      .news-grid,
-      .testimonial-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 680px) {
-      .shell {
-        width: min(100% - 22px, 1180px);
-      }
-
-      .hero {
-        padding-top: 106px;
-      }
-
-      .hero::before {
-        background:
-          linear-gradient(180deg, rgba(7, 9, 15, 0.86), rgba(7, 9, 15, 0.82)),
-          url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1100&q=78") center / cover;
-      }
-
-      .section-head,
-      .footer-row {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .stat-strip,
-      .features,
-      .games-grid,
-      .tiers,
-      .news-grid,
-      .testimonial-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .event-card {
-        grid-template-columns: auto 1fr;
-      }
-
-      .event-prize {
-        grid-column: 2;
-      }
-
-      .cta {
-        padding: 28px;
-      }
-
-      h1 {
-        font-size: clamp(3rem, 17vw, 4.8rem);
-      }
-    }
-  </style>
+  <title>Nexus Arena | Gaming Home</title>
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="site-header" id="top">
@@ -1013,15 +16,18 @@
         </span>
         <span>Nexus Arena</span>
       </a>
+
       <div class="nav-links" id="navLinks">
         <a href="#top">Home</a>
         <a href="#screenshots">Screenshots</a>
-        <a href="#features">Platform</a>
+        <a href="#features">Features</a>
+        <a href="#games">1,000 Games</a>
         <a href="#news">News</a>
         <a href="#testimonials">Players</a>
       </div>
+
       <div class="nav-actions">
-        <button class="icon-btn" type="button" aria-label="Search">
+        <button class="icon-btn" type="button" aria-label="Search games" data-focus-search>
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
         </button>
         <a class="btn btn-primary" href="#signup">Sign Up</a>
@@ -1035,91 +41,77 @@
   <main>
     <section class="hero">
       <div class="grid-overlay"></div>
-      <div class="shell">
-        <div class="hero-layout">
-          <div class="hero-copy-wrap reveal">
-            <div class="hero-logo" aria-label="Nexus Arena game logo">
-              <svg viewBox="0 0 24 24"><path d="M6 12h12M12 6v12"/><path d="M5 8l4-3h6l4 3 2 8-3 3-4-4h-4l-4 4-3-3 2-8Z"/></svg>
+      <div class="shell hero-layout">
+        <div class="hero-copy-wrap reveal">
+          <div class="hero-logo" aria-label="Nexus Arena game logo">
+            <svg viewBox="0 0 24 24"><path d="M6 12h12M12 6v12"/><path d="M5 8l4-3h6l4 3 2 8-3 3-4-4h-4l-4 4-3-3 2-8Z"/></svg>
+          </div>
+          <div class="eyebrow"><span class="pulse"></span> Season 08 is live</div>
+          <h1>Nexus Arena</h1>
+          <p class="hero-copy">A cinematic multiplayer gaming hub where players discover 1,000 arena-ready games, squad up, climb leaderboards, and jump into smooth competitive sessions from any screen.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#games">
+              <svg viewBox="0 0 24 24"><path d="M5 3v18l15-9L5 3Z"/></svg>
+              Play Now
+            </a>
+            <a class="btn" id="signup" href="#games">
+              <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+              Sign Up
+            </a>
+          </div>
+        </div>
+
+        <aside class="hero-panel reveal" aria-label="Featured match">
+          <div class="match-image">
+            <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=900&q=82" alt="Gaming monitor with colorful competitive gameplay" />
+            <div class="match-badge"><span class="pulse"></span> Live Queue</div>
+          </div>
+          <div class="match-content">
+            <div class="teams">
+              <div class="team">
+                <div class="team-logo">NV</div>
+                <strong>Nova Vortex</strong>
+              </div>
+              <div class="versus">VS</div>
+              <div class="team">
+                <div class="team-logo">RX</div>
+                <strong>Rift X</strong>
+              </div>
             </div>
-            <div class="eyebrow"><span class="pulse"></span> Season 08 qualifiers are live</div>
-            <h1>Nexus Arena</h1>
-            <p class="hero-copy">A cinematic multiplayer arena game where squads clash across neon battlegrounds, master tactical loadouts, and fight for leaderboard dominance in fast, skill-first matches.</p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="#screenshots">
-                <svg viewBox="0 0 24 24"><path d="M5 3v18l15-9L5 3Z"/></svg>
-                Play Now
-              </a>
-              <a class="btn" href="#signup">
-                <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
-                Sign Up
-              </a>
+            <div class="match-meta">
+              <span>1,000 games online</span>
+              <strong>14ms Avg. Ping</strong>
             </div>
           </div>
+        </aside>
+      </div>
 
-          <aside class="hero-panel reveal" aria-label="Featured match">
-            <div class="match-image">
-              <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=900&q=82" alt="Gaming monitor with colorful competitive gameplay" />
-              <div class="match-badge"><span class="pulse"></span> Live Finals</div>
-            </div>
-            <div class="match-content">
-              <div class="teams">
-                <div class="team">
-                  <div class="team-logo">NV</div>
-                  <strong>Nova Vortex</strong>
-                </div>
-                <div class="versus">VS</div>
-                <div class="team">
-                  <div class="team-logo">RX</div>
-                  <strong>Rift X</strong>
-                </div>
-              </div>
-              <div class="match-meta">
-                <span>Starts 8:30 PM</span>
-                <strong>$24K Prize Pool</strong>
-              </div>
-            </div>
-          </aside>
-        </div>
-
-        <div class="stat-strip reveal" aria-label="Platform statistics">
-          <div class="stat"><strong>1.8M</strong><span>Players matched</span></div>
-          <div class="stat"><strong>320+</strong><span>Monthly events</span></div>
-          <div class="stat"><strong>14ms</strong><span>Avg. server ping</span></div>
-          <div class="stat"><strong>98%</strong><span>Anti-cheat coverage</span></div>
-        </div>
+      <div class="shell stat-strip reveal" aria-label="Platform statistics">
+        <div class="stat"><strong>1,000</strong><span>Games available</span></div>
+        <div class="stat"><strong>1.8M</strong><span>Players matched</span></div>
+        <div class="stat"><strong>320+</strong><span>Monthly events</span></div>
+        <div class="stat"><strong>98%</strong><span>Fair-play coverage</span></div>
       </div>
     </section>
 
     <section id="screenshots">
       <div class="shell">
         <div class="section-head reveal">
-          <h2>Featured screenshots from the battlefield.</h2>
-          <p>Explore the environments, combat setups, and high-energy visual style that define every Nexus Arena match.</p>
+          <h2>Featured game screenshots.</h2>
+          <p>Explore bold arenas, tactical spaces, and high-energy worlds built for fast competitive sessions.</p>
         </div>
-        <div class="games-grid">
-          <article class="game-card reveal">
+        <div class="screenshots-grid">
+          <article class="screenshot-card reveal">
             <img src="https://images.unsplash.com/photo-1627856013091-fed6e4e30025?auto=format&fit=crop&w=900&q=82" alt="RGB gaming keyboard and mouse setup" />
-            <div class="game-info">
-              <div class="tag-row"><span class="tag">FPS</span><span class="tag">5v5</span></div>
-              <h3>Neon District</h3>
-              <p>Close-range lanes, vertical cover, and fast rotations for aggressive squads.</p>
-            </div>
+            <div><span>FPS</span><h3>Neon District</h3></div>
           </article>
-          <article class="game-card reveal">
+          <article class="screenshot-card reveal">
             <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=82" alt="Retro arcade machines glowing in a gaming venue" />
-            <div class="game-info">
-              <div class="tag-row"><span class="tag">Arcade</span><span class="tag">Arena</span></div>
-              <h3>Arcade Sector</h3>
-              <p>Bright, chaotic combat spaces built for movement, traps, and clutch plays.</p>
-            </div>
+            <div><span>Arcade</span><h3>Arcade Sector</h3></div>
           </article>
-          <article class="game-card reveal">
+          <article class="screenshot-card reveal">
             <img src="https://images.unsplash.com/photo-1556438064-2d7646166914?auto=format&fit=crop&w=900&q=82" alt="Player holding a gaming controller close to a screen" />
-            <div class="game-info">
-              <div class="tag-row"><span class="tag">Battle</span><span class="tag">Solo</span></div>
-              <h3>Drop Zone</h3>
-              <p>Open survival encounters where positioning and resource timing decide the round.</p>
-            </div>
+            <div><span>Battle</span><h3>Drop Zone</h3></div>
           </article>
         </div>
       </div>
@@ -1128,30 +120,65 @@
     <section id="features">
       <div class="shell">
         <div class="section-head reveal">
-          <h2>Game features tuned for modern competition.</h2>
-          <p>Responsive controls, readable progression, and powerful systems that reward smart teamwork every round.</p>
+          <h2>Game features tuned for modern play.</h2>
+          <p>Responsive controls, smart discovery, clean rankings, and smooth UI for casual players and competitive squads.</p>
         </div>
         <div class="features">
           <article class="feature-card reveal">
             <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
             <h3>Live Analytics</h3>
-            <p>Track damage, accuracy, objective time, heat maps, and form trends with readable dashboards.</p>
-          </article>
-          <article class="feature-card reveal">
-            <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-            <h3>Squad Finder</h3>
-            <p>Find reliable teammates by role, rank, region, platform, and play schedule.</p>
+            <p>Track performance, trends, accuracy, objective time, and favorite genres in real time.</p>
           </article>
           <article class="feature-card reveal">
             <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
             <h3>Fair Play</h3>
-            <p>Match integrity scoring and automated reviews keep ranked play competitive and clean.</p>
+            <p>Ranked sessions use moderation signals, player reports, and match integrity scoring.</p>
           </article>
           <article class="feature-card reveal">
             <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4"/><path d="M7 4h10v6a5 5 0 0 1-10 0V4Z"/><path d="M5 8H3a4 4 0 0 0 4 4M19 8h2a4 4 0 0 1-4 4"/></svg></div>
-            <h3>Pro Events</h3>
-            <p>Join seasonal cups, creator showdowns, and ranked events with polished match flow.</p>
+            <h3>Events</h3>
+            <p>Join creator cups, weekly tournaments, challenge ladders, and community spotlights.</p>
           </article>
+          <article class="feature-card reveal">
+            <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M4 12h16M4 6h16M4 18h10"/></svg></div>
+            <h3>Huge Library</h3>
+            <p>Browse 1,000 games with search, genre filters, sorting, ratings, and load-more browsing.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="games">
+      <div class="shell">
+        <div class="section-head reveal">
+          <h2>Browse 1,000 games.</h2>
+          <p>Search, filter, sort, and launch into a massive responsive game catalog generated with JavaScript for speed.</p>
+        </div>
+
+        <div class="game-toolbar reveal">
+          <label class="search-box" for="gameSearch">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="gameSearch" type="search" placeholder="Search 1,000 games..." autocomplete="off" />
+          </label>
+          <select id="genreFilter" aria-label="Filter by genre"></select>
+          <select id="sortGames" aria-label="Sort games">
+            <option value="featured">Featured</option>
+            <option value="rating">Highest rated</option>
+            <option value="players">Most players</option>
+            <option value="newest">Newest</option>
+            <option value="name">Name A-Z</option>
+          </select>
+        </div>
+
+        <div class="catalog-meta reveal">
+          <strong id="catalogCount">Loading games...</strong>
+          <span id="catalogHint">Showing optimized results</span>
+        </div>
+
+        <div class="games-grid" id="gamesGrid" aria-live="polite"></div>
+
+        <div class="load-row">
+          <button class="btn btn-primary" id="loadMoreGames" type="button">Load More Games</button>
         </div>
       </div>
     </section>
@@ -1160,7 +187,7 @@
       <div class="shell">
         <div class="section-head reveal">
           <h2>Latest news and updates.</h2>
-          <p>Follow the newest maps, balance changes, events, and community highlights from the Nexus Arena team.</p>
+          <p>Follow maps, balance changes, new releases, and community highlights from the Nexus Arena team.</p>
         </div>
         <div class="news-grid">
           <article class="news-card reveal">
@@ -1176,7 +203,7 @@
             <div class="news-body">
               <span class="news-date">Patch Notes</span>
               <h3>Weapon tuning and movement polish</h3>
-              <p>Assault recoil, slide recovery, and controller aim response have been refined for fairer fights.</p>
+              <p>Assault recoil, slide recovery, and controller aim response have been refined.</p>
             </div>
           </article>
           <article class="news-card reveal">
@@ -1184,7 +211,7 @@
             <div class="news-body">
               <span class="news-date">Community</span>
               <h3>Creator Clash opens registrations</h3>
-              <p>Streamers and squads can now register for weekly showcase brackets and highlight rewards.</p>
+              <p>Streamers and squads can register for weekly showcase brackets and highlight rewards.</p>
             </div>
           </article>
         </div>
@@ -1195,35 +222,26 @@
       <div class="shell">
         <div class="section-head reveal">
           <h2>What players are saying.</h2>
-          <p>Built around quick sessions, serious ranked nights, and the kind of moments players want to clip.</p>
+          <p>Built around quick sessions, serious ranked nights, and moments players want to share.</p>
         </div>
         <div class="testimonial-grid">
           <article class="testimonial-card reveal">
             <div class="stars" aria-label="5 stars">★★★★★</div>
             <h3>"The movement feels incredible."</h3>
             <p>Nexus Arena gives our squad fast matches without losing tactical depth. Every round feels winnable if we communicate.</p>
-            <div class="player">
-              <div class="avatar">AK</div>
-              <div><strong>Ari K.</strong><span>Diamond captain</span></div>
-            </div>
+            <div class="player"><div class="avatar">AK</div><div><strong>Ari K.</strong><span>Diamond captain</span></div></div>
           </article>
           <article class="testimonial-card reveal">
             <div class="stars" aria-label="5 stars">★★★★★</div>
             <h3>"Perfect for streaming."</h3>
             <p>The lighting, pace, and replay moments make it easy to turn a normal match into content people actually watch.</p>
-            <div class="player">
-              <div class="avatar">MX</div>
-              <div><strong>Moxie</strong><span>Creator and caster</span></div>
-            </div>
+            <div class="player"><div class="avatar">MX</div><div><strong>Moxie</strong><span>Creator and caster</span></div></div>
           </article>
           <article class="testimonial-card reveal">
             <div class="stars" aria-label="5 stars">★★★★★</div>
             <h3>"Ranked finally feels fair."</h3>
-            <p>The anti-cheat, clear stats, and matchmaking make the ladder feel earned instead of random.</p>
-            <div class="player">
-              <div class="avatar">JR</div>
-              <div><strong>Juno R.</strong><span>Controller specialist</span></div>
-            </div>
+            <p>The fair-play systems, clear stats, and matchmaking make the ladder feel earned instead of random.</p>
+            <div class="player"><div class="avatar">JR</div><div><strong>Juno R.</strong><span>Controller specialist</span></div></div>
           </article>
         </div>
       </div>
@@ -1232,11 +250,11 @@
     <section>
       <div class="shell">
         <div class="cta reveal">
-          <h2>Ready up for the next season.</h2>
-          <p>Create your profile, connect your squad, and join a tournament lobby built for clean competition and bigger moments.</p>
+          <h2>Ready up for your next game.</h2>
+          <p>Create your profile, browse the 1,000-game library, and start playing from a modern gaming homepage built for every device.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#membership">Create Account</a>
-            <a class="btn" href="#events">View Schedule</a>
+            <a class="btn btn-primary" href="#games">Play Now</a>
+            <a class="btn" href="#top">Back Home</a>
           </div>
         </div>
       </div>
@@ -1251,7 +269,11 @@
         </span>
         <span>Nexus Arena</span>
       </div>
-      <span>Built for ranked nights, creator cups, and championship runs.</span>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact</a>
+      </div>
       <div class="socials" aria-label="Social links">
         <a class="icon-btn" href="#" aria-label="Discord"><svg viewBox="0 0 24 24"><path d="M8 12h.01M16 12h.01"/><path d="M7.5 7.5c3-1 6-1 9 0"/><path d="M7 17c-2-1-3-3-3-7 0-1.5.6-3.5 2-5 2 .5 3 1 4 2h4c1-1 2-1.5 4-2 1.4 1.5 2 3.5 2 5 0 4-1 6-3 7-2 .8-8 .8-10 0Z"/></svg></a>
         <a class="icon-btn" href="#" aria-label="Twitch"><svg viewBox="0 0 24 24"><path d="M4 4h16v11l-4 4h-4l-3 3v-3H4V4Z"/><path d="M10 8v5M15 8v5"/></svg></a>
@@ -1260,37 +282,6 @@
     </div>
   </footer>
 
-  <script>
-    const header = document.querySelector(".site-header");
-    const menuBtn = document.querySelector("#menuBtn");
-    const navLinks = document.querySelector("#navLinks");
-    const revealItems = document.querySelectorAll(".reveal");
-
-    const setHeader = () => {
-      header.classList.toggle("scrolled", window.scrollY > 24);
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.16 });
-
-    revealItems.forEach((item) => observer.observe(item));
-    setHeader();
-    window.addEventListener("scroll", setHeader, { passive: true });
-
-    menuBtn.addEventListener("click", () => {
-      navLinks.classList.toggle("open");
-      menuBtn.setAttribute("aria-label", navLinks.classList.contains("open") ? "Close menu" : "Open menu");
-    });
-
-    navLinks.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => navLinks.classList.remove("open"));
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
